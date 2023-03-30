@@ -1,19 +1,51 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import articles from '../../../articles';
 import { notFound } from 'next/navigation';
+// import getArticle from '../../../lib/getArticle';
 
-const getArticle = () => {
-  //version of getStaticProps(), for static website/info
-  return articles[0];
-};
+export async function generateMetaData({ params }) {
+  const { slug } = params;
+  // const article = getArticle(slug);
+  const article = articles.find((article) => article.slug === slug);
+
+  if (!article) {
+    return {
+      title: 'Article Not Found.',
+    };
+  }
+
+  return {
+    title: article.title,
+    description: `The articles title is ${article.title}`,
+  };
+}
+
+// const getArticle = () => {
+//   //version of getStaticProps(), for static website/info
+//   return articles[0];
+// };
 
 const Page = ({ params }) => {
+  // const [article, setArticle] = useState('');
+
   const { slug } = params;
   const router = useRouter();
+  const article = articles.find((article) => article.slug === slug);
 
-  const article = getArticle();
+  // useEffect(() => {
+  //   async function fetchArticle() {
+  //     const theArticle = await getArticle(slug);
+  //     console.log(theArticle);
+  //     setArticle(theArticle);
+  //   }
+  //   fetchArticle();
+  // }, []);
+
+  if (!article) {
+    return notFound();
+  }
 
   return (
     <div className='p-4'>
@@ -23,7 +55,7 @@ const Page = ({ params }) => {
       >
         Go back
       </div>
-      <div className='text-3xl'>Article name: {slug}</div>
+      <div className='text-3xl'>Article name: {article.title}</div>
       <div className='p-4'>
         <div className='shadow-lg shadow-gray-400 p-4 rounded-lg'>
           {article.content}
