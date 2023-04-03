@@ -17,7 +17,7 @@ const Page = () => {
   return (
     <div className='p-4'>
       <div className='text-3xl'>All Articles</div>
-      <div>
+      <div className='grid grid-cols-3'>
         {articles.map((article) => (
           <div
             key={article.id}

@@ -1,47 +1,29 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import articles from '../../../articles';
 import { notFound } from 'next/navigation';
-// import getArticle from '../../../lib/getArticle';
 
-export async function generateMetaData({ params }) {
-  const { slug } = params;
-  // const article = getArticle(slug);
-  const article = articles.find((article) => article.slug === slug);
+// export async function generateMetaData({ params }) {
+//   const { slug } = params;
+//   const article = articles.find((article) => article.slug === slug);
 
-  if (!article) {
-    return {
-      title: 'Article Not Found.',
-    };
-  }
+//   if (!article) {
+//     return {
+//       title: 'Article Not Found.',
+//     };
+//   }
 
-  return {
-    title: article.title,
-    description: `The articles title is ${article.title}`,
-  };
-}
-
-// const getArticle = () => {
-//   //version of getStaticProps(), for static website/info
-//   return articles[0];
-// };
+//   return {
+//     title: article.title,
+//     description: `The articles title is ${article.title}`,
+//   };
+// }
 
 const Page = ({ params }) => {
-  // const [article, setArticle] = useState('');
-
   const { slug } = params;
   const router = useRouter();
   const article = articles.find((article) => article.slug === slug);
-
-  // useEffect(() => {
-  //   async function fetchArticle() {
-  //     const theArticle = await getArticle(slug);
-  //     console.log(theArticle);
-  //     setArticle(theArticle);
-  //   }
-  //   fetchArticle();
-  // }, []);
 
   if (!article) {
     return notFound();
