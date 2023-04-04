@@ -1,21 +1,38 @@
 'use client';
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import articles from '../../../articles';
 import { notFound } from 'next/navigation';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlineArticle } from 'react-icons/md';
+import Axios from 'axios';
+
+const URL = 'http://localhost:3001/newsapp/articles';
+
+async function fetchArticle(slug) {
+  const { data } = await Axios.get(`${URL}/${slug}`);
+  return data;
+}
 
 const Page = ({ params }) => {
-  const { slug } = params;
-  const router = useRouter();
-  const article = articles.find((article) => article.slug === slug);
+  const [article, setArticle] = useState({});
 
-  if (!article) {
-    return notFound();
-  }
+  const { slug } = params;
+  // const router = useRouter();
+
+  useEffect(() => {
+    async function backendCall() {
+      const data = await fetchArticle(slug);
+      setArticle(data);
+    }
+
+    backendCall();
+  }, []);
+
+  // if (!article) {
+  //   return notFound();
+  // }
 
   return (
     <div className='p-4'>

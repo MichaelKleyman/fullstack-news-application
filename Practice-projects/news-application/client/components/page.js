@@ -2,8 +2,6 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
-// import articles from '../articles';
-
 // const getArticles = () => {
 //   //version of getStaticProps()
 //   return articles;
