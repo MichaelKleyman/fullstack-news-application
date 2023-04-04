@@ -2,22 +2,22 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
-import articles from '../articles';
+// import articles from '../articles';
 
-const getArticles = () => {
-  //version of getStaticProps()
-  return articles;
-};
+// const getArticles = () => {
+//   //version of getStaticProps()
+//   return articles;
+// };
 
-const Page = () => {
+const Page = ({ articles }) => {
   const router = useRouter();
 
-  const articles = getArticles();
+  // const articles = getArticles();
 
   return (
     <div className='p-4'>
       <div className='text-3xl'>All Articles</div>
-      <div className='grid grid-cols-3'>
+      <div className='grid md:grid-cols-3'>
         {articles.map((article) => (
           <div
             key={article.id}
