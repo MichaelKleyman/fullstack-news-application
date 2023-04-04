@@ -1,25 +1,31 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { notFound } from 'next/navigation';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlineArticle } from 'react-icons/md';
 import Axios from 'axios';
+import NotFound from './not-found';
 
 const URL = 'http://localhost:3001/newsapp/articles';
 
 async function fetchArticle(slug) {
-  const { data } = await Axios.get(`${URL}/${slug}`);
-  return data;
+  try {
+    const { data } = await Axios.get(`${URL}/${slug}`);
+    if (data.slug !== slug) {
+      throw new Error('Data not found');
+    }
+    return data;
+  } catch (error) {
+    notFound();
+  }
 }
 
 const Page = ({ params }) => {
   const [article, setArticle] = useState({});
-
   const { slug } = params;
-  // const router = useRouter();
 
   useEffect(() => {
     async function backendCall() {
@@ -29,10 +35,6 @@ const Page = ({ params }) => {
 
     backendCall();
   }, []);
-
-  // if (!article) {
-  //   return notFound();
-  // }
 
   return (
     <div className='p-4'>
@@ -49,31 +51,31 @@ const Page = ({ params }) => {
           Article
         </div>
       </Breadcrumbs>
-      {/* <div
-        onClick={() => router.push('/')}
-        className='p-4 cursor-pointer hover:font-bold'
-      >
-        Go back
-      </div> */}
-      <div className='text-3xl text-blue-600'>
-        Article name: <span className='text-black'>{article.title}</span>
-      </div>
-      <div className='p-4'>
-        <div className='shadow-lg shadow-gray-400 p-4 rounded-lg'>
-          {article.content}
-        </div>
-      </div>
+      {article.title ? (
+        <>
+          <div className='text-3xl text-blue-600'>
+            Article name: <span className='text-black'>{article.title}</span>
+          </div>
+          <div className='p-4'>
+            <div className='shadow-lg shadow-gray-400 p-4 rounded-lg'>
+              {article.content}
+            </div>
+          </div>
+        </>
+      ) : (
+        <NotFound />
+      )}
     </div>
   );
 };
 
 export default Page;
 
-export async function generateStaticParams() {
-  return articles.map((article) => ({
-    slug: article.slug,
-  }));
-}
+// export async function generateStaticParams() {
+//   return articles.map((article) => ({
+//     slug: article.slug,
+//   }));
+// }
 
 // export async function getStaticPaths() {
 //   return {
