@@ -3,22 +3,10 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import articles from '../../../articles';
 import { notFound } from 'next/navigation';
-
-// export async function generateMetaData({ params }) {
-//   const { slug } = params;
-//   const article = articles.find((article) => article.slug === slug);
-
-//   if (!article) {
-//     return {
-//       title: 'Article Not Found.',
-//     };
-//   }
-
-//   return {
-//     title: article.title,
-//     description: `The articles title is ${article.title}`,
-//   };
-// }
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from 'next/link';
+import { AiOutlineHome } from 'react-icons/ai';
+import { MdOutlineArticle } from 'react-icons/md';
 
 const Page = ({ params }) => {
   const { slug } = params;
@@ -31,13 +19,28 @@ const Page = ({ params }) => {
 
   return (
     <div className='p-4'>
-      <div
+      <Breadcrumbs aria-label='breadcrumb' className='p-4'>
+        <Link
+          href='/'
+          className='text-blue-600 hover:underline flex items-center hover:scale-110 duration-300'
+        >
+          <AiOutlineHome color='black' size={33} className='p-2' />
+          Home
+        </Link>
+        <div className='flex items-center'>
+          <MdOutlineArticle color='grey' size={33} className='p-2' />
+          Article
+        </div>
+      </Breadcrumbs>
+      {/* <div
         onClick={() => router.push('/')}
         className='p-4 cursor-pointer hover:font-bold'
       >
         Go back
+      </div> */}
+      <div className='text-3xl text-blue-600'>
+        Article name: <span className='text-black'>{article.title}</span>
       </div>
-      <div className='text-3xl'>Article name: {article.title}</div>
       <div className='p-4'>
         <div className='shadow-lg shadow-gray-400 p-4 rounded-lg'>
           {article.content}
@@ -63,5 +66,21 @@ export async function generateStaticParams() {
 //       { params: { slug: articles[2].slug } },
 //     ],
 //     fallback: false,
+//   };
+// }
+
+// export async function generateMetaData({ params }) {
+//   const { slug } = params;
+//   const article = articles.find((article) => article.slug === slug);
+
+//   if (!article) {
+//     return {
+//       title: 'Article Not Found.',
+//     };
+//   }
+
+//   return {
+//     title: article.title,
+//     description: `The articles title is ${article.title}`,
 //   };
 // }
