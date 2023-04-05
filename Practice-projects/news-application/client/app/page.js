@@ -6,8 +6,14 @@ import Page from '../components/page';
 const URL = 'http://localhost:3001/newsapp/articles';
 
 async function fetchArticles() {
-  const { data } = await Axios.get(URL);
-  return data;
+  //should be server side rendering, like getServerSideProps
+  const response = await Axios.get(URL);
+  // console.log(response);
+  if (response) {
+    return response.data;
+  } else {
+    throw new Error('Error');
+  }
 }
 
 const page = () => {
