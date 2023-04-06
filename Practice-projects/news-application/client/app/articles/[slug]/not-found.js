@@ -12,7 +12,7 @@ const NotFound = () => {
 
   return (
     <div className='m-6'>
-      <Alert severity='error'>Article Not Found</Alert>
+      <Alert severity='error'>404 Article Not Found</Alert>
       <p
         type='button'
         onClick={() => router.push('/')}

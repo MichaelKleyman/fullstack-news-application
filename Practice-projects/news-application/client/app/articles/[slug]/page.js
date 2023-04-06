@@ -8,13 +8,18 @@ const URL = 'http://localhost:3001/newsapp/articles';
 
 async function fetchArticle(slug) {
   try {
-    const { data } = await Axios.get(`${URL}/${slug}`);
-    if (data.slug !== slug) {
-      throw new Error('Data not found');
-    }
-    return data;
+    const response = await Axios.get(`${URL}/${slug}`);
+    return { data: response.data };
   } catch (error) {
-    notFound();
+    if (error.response.status === 404) {
+      notFound();
+    } else {
+      console.log(error);
+      return {
+        status: error.response.status,
+        fetchError: error.response.data.error,
+      };
+    }
   }
 }
 
@@ -39,14 +44,29 @@ export default async function Page({ params }) {
         </div>
       </div>
 
-      <div className='text-3xl text-blue-600'>
-        Article name: <span className='text-black'>{article.title}</span>
-      </div>
-      <div className='p-4'>
-        <div className='shadow-lg shadow-gray-400 p-4 rounded-lg'>
-          {article.content}
+      {!article.status ? (
+        <>
+          <div className='text-3xl text-blue-600'>
+            Article name:{' '}
+            <span className='text-black'>{article.data?.title}</span>
+          </div>
+          <div className='p-4'>
+            <div className='shadow-lg shadow-gray-400 p-4 rounded-lg'>
+              {article.data?.content}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div
+          className={`${
+            article.status
+              ? 'm-6 bg-red-200 p-4 rounded-lg text-center text-red-700'
+              : 'hidden'
+          }`}
+        >
+          {article.status} {article.fetchError}
         </div>
-      </div>
+      )}
     </div>
   );
 }
