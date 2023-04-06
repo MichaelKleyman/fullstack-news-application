@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect } from 'react';
-// import { useRouter } from 'next/navigation';
 import { notFound } from 'next/navigation';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from 'next/link';
@@ -51,8 +50,18 @@ const Page = ({ params }) => {
           Article
         </div>
       </Breadcrumbs>
-      {article.title ? (
-        <>
+
+      <div className='text-3xl text-blue-600'>
+        Article name: <span className='text-black'>{article.title}</span>
+      </div>
+      <div className='p-4'>
+        <div className='shadow-lg shadow-gray-400 p-4 rounded-lg'>
+          {article.content}
+        </div>
+      </div>
+
+      {/* {article.title ? (
+        <Suspense fallback={<p>Loading....</p>}>
           <div className='text-3xl text-blue-600'>
             Article name: <span className='text-black'>{article.title}</span>
           </div>
@@ -61,10 +70,10 @@ const Page = ({ params }) => {
               {article.content}
             </div>
           </div>
-        </>
+        </Suspense>
       ) : (
         <NotFound />
-      )}
+      )} */}
     </div>
   );
 };

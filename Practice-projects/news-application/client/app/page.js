@@ -5,14 +5,13 @@ import Page from '../components/page';
 
 const URL = 'http://localhost:3001/newsapp/articles';
 
+//should be server side rendering, like getServerSideProps
 async function fetchArticles() {
-  //should be server side rendering, like getServerSideProps
   const response = await Axios.get(URL);
-  // console.log(response);
   if (response) {
     return response.data;
   } else {
-    throw new Error('Error');
+    return { error: 'Internal Server Error' };
   }
 }
 
@@ -22,7 +21,11 @@ const page = () => {
   useEffect(() => {
     async function backendCall() {
       const data = await fetchArticles();
-      setArticles(data);
+      if (data) {
+        setArticles(data);
+      } else {
+        console.log('Error');
+      }
     }
     backendCall();
   }, []);
