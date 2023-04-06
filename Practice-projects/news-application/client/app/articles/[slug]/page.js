@@ -1,12 +1,8 @@
-'use client';
-import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlineArticle } from 'react-icons/md';
 import Axios from 'axios';
-import NotFound from './not-found';
 
 const URL = 'http://localhost:3001/newsapp/articles';
 
@@ -22,22 +18,14 @@ async function fetchArticle(slug) {
   }
 }
 
-const Page = ({ params }) => {
-  const [article, setArticle] = useState({});
+export default async function Page({ params }) {
   const { slug } = params;
 
-  useEffect(() => {
-    async function backendCall() {
-      const data = await fetchArticle(slug);
-      setArticle(data);
-    }
-
-    backendCall();
-  }, []);
+  const article = await fetchArticle(slug);
 
   return (
     <div className='p-4'>
-      <Breadcrumbs aria-label='breadcrumb' className='p-4'>
+      <div aria-label='breadcrumb' className='p-4 flex'>
         <Link
           href='/'
           className='text-blue-600 hover:underline flex items-center hover:scale-110 duration-300'
@@ -45,11 +33,11 @@ const Page = ({ params }) => {
           <AiOutlineHome color='black' size={33} className='p-2' />
           Home
         </Link>
-        <div className='flex items-center'>
+        <div className='flex items-center text-gray-400'>
           <MdOutlineArticle color='grey' size={33} className='p-2' />
           Article
         </div>
-      </Breadcrumbs>
+      </div>
 
       <div className='text-3xl text-blue-600'>
         Article name: <span className='text-black'>{article.title}</span>
@@ -59,26 +47,9 @@ const Page = ({ params }) => {
           {article.content}
         </div>
       </div>
-
-      {/* {article.title ? (
-        <Suspense fallback={<p>Loading....</p>}>
-          <div className='text-3xl text-blue-600'>
-            Article name: <span className='text-black'>{article.title}</span>
-          </div>
-          <div className='p-4'>
-            <div className='shadow-lg shadow-gray-400 p-4 rounded-lg'>
-              {article.content}
-            </div>
-          </div>
-        </Suspense>
-      ) : (
-        <NotFound />
-      )} */}
     </div>
   );
-};
-
-export default Page;
+}
 
 // export async function generateStaticParams() {
 //   return articles.map((article) => ({
