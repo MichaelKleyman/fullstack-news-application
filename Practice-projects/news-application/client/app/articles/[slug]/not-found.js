@@ -16,7 +16,7 @@ const NotFound = () => {
       <p
         type='button'
         onClick={() => router.push('/')}
-        className='p-6 hover:font-bold duration-300 cursor-pointer'
+        className='cursor-pointer hover:font-bold duration-300 p-4'
       >
         Go back
       </p>

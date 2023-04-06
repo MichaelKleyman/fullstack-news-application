@@ -1,30 +1,28 @@
-'use client';
 import React from 'react';
-import { useRouter } from 'next/navigation';
-
-// const getArticles = () => {
-//   //version of getStaticProps()
-//   return articles;
-// };
+import Link from 'next/link';
 
 const Page = ({ articles }) => {
-  const router = useRouter();
-
-  // const articles = getArticles();
-
   return (
     <div className='p-4'>
       <div className='text-3xl'>All Articles</div>
-
+      <div
+        className={`${
+          articles.code
+            ? 'm-6 bg-red-200 p-4 rounded-lg text-center text-red-700'
+            : 'hidden'
+        }`}
+      >
+        {articles.code} {articles.fetchError}
+      </div>
       <div className='grid md:grid-cols-3'>
-        {articles.map((article) => (
-          <div
+        {articles.data?.map((article) => (
+          <Link
             key={article.id}
-            onClick={() => router.push(`/articles/${article.slug}`)}
+            href={`/articles/${article.slug}`}
             className='p-6 m-3 rounded-lg shadow-lg shadow-gray-400 cursor-pointer duration-300 hover:scale-110'
           >
             {article.title}
-          </div>
+          </Link>
         ))}
       </div>
     </div>
