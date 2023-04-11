@@ -27,7 +27,7 @@ export default async function Page({ params }) {
   const { slug } = params;
 
   const article = await fetchArticle(slug);
-  console.log(article);
+  // console.log(article);
 
   return (
     <div className='p-4'>
