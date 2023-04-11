@@ -1,6 +1,17 @@
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import { MdCreate } from 'react-icons/md';
+import Axios from 'axios';
+
+const URL = 'http://localhost:3001/newsapp/articles';
+
+async function createArticle(postObj) {
+  try {
+    await Axios.post(URL, postObj);
+  } catch (error) {
+    console.log({ error: error });
+  }
+}
 
 export default function PageForm({ postObj, setPost }) {
   const handleChange = (e) => {
@@ -8,7 +19,8 @@ export default function PageForm({ postObj, setPost }) {
     setPost(newObj);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    await createArticle(postObj);
     console.log(postObj);
   };
 
