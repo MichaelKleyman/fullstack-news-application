@@ -2,9 +2,16 @@ import React from 'react';
 import Link from 'next/link';
 
 const Page = ({ articles }) => {
+  const handlePost = () => {};
+
   return (
     <div className='p-4'>
       <div className='text-3xl'>All Articles</div>
+      <Link href='/post'>
+        <button className='m-4 bg-blue-200 px-4 py-2 rounded-lg shadow-lg shadow-gray-400 uppercase text-sm duration-300 hover:scale-110 text-blue-600'>
+          Post
+        </button>
+      </Link>
       <div
         className={`${
           articles.statusCode
