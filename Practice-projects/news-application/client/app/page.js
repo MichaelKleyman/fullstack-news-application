@@ -7,12 +7,11 @@ const URL = 'http://localhost:3001/newsapp/articles';
 async function fetchArticles() {
   try {
     const response = await Axios.get(URL);
-    // console.log(response);
     return { data: response.data };
   } catch (error) {
     return {
-      fetchError: error.response.data.error,
-      code: error.response.status,
+      fetchError: error.response.data,
+      statusCode: error.response.status,
     };
   }
 }

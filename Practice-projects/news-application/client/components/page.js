@@ -7,12 +7,12 @@ const Page = ({ articles }) => {
       <div className='text-3xl'>All Articles</div>
       <div
         className={`${
-          articles.code
+          articles.statusCode
             ? 'm-6 bg-red-200 p-4 rounded-lg text-center text-red-700'
             : 'hidden'
         }`}
       >
-        {articles.code} {articles.fetchError}
+        {articles.statusCode} {articles.fetchError}
       </div>
       <div className='grid md:grid-cols-3'>
         {articles.data?.map((article) => (
