@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import { MdOutlineArticle } from 'react-icons/md';
 import Axios from 'axios';
+import DeleteArticle from '../../../components/DeleteArticle';
 
 const URL = 'http://localhost:3001/newsapp/articles';
 
@@ -52,9 +53,10 @@ export default async function Page({ params }) {
             <span className='text-black'>{article.data?.title}</span>
           </div>
           <div className='p-4'>
-            <div className='shadow-lg shadow-gray-400 p-4 rounded-lg'>
-              {article.data?.content}
-            </div>
+            <DeleteArticle
+              article={article.data?.content}
+              slug={slug}
+            />
           </div>
         </>
       ) : (
