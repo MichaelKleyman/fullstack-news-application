@@ -1,3 +1,5 @@
+'use client';
+import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import Page from '../components/page';
 
@@ -16,9 +18,17 @@ async function fetchArticles() {
   }
 }
 
-export default async function page() {
-  const articles = await fetchArticles();
-  // console.log(articles);
+export default function page() {
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    async function getArticles() {
+      const articles = await fetchArticles();
+      setArticles(articles);
+      // console.log(articles);
+    }
+    getArticles();
+  }, []);
 
   return (
     <div className='p-4'>

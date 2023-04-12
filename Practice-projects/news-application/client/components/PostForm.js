@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import { MdCreate } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
 import Axios from 'axios';
 
 const URL = 'http://localhost:3001/newsapp/articles';
@@ -13,15 +14,25 @@ async function createArticle(postObj) {
   }
 }
 
-export default function PageForm({ postObj, setPost }) {
+export default function PageForm({ postObj, setPost, error, setError }) {
+  const router = useRouter();
+  const { title, slug, content } = postObj;
+
   const handleChange = (e) => {
     const newObj = { ...postObj, [e.target.name]: e.target.value };
     setPost(newObj);
   };
 
   const handleSubmit = async () => {
-    await createArticle(postObj);
-    console.log(postObj);
+    if (title.length && slug.length && content.length) {
+      router.push('/');
+      await createArticle(postObj);
+      setPost({ title: '', slug: '', content: '' });
+      setError(null);
+      console.log(postObj);
+    } else {
+      setError('Fill in all fields.');
+    }
   };
 
   return (
@@ -85,6 +96,7 @@ export default function PageForm({ postObj, setPost }) {
             Complete Post
           </button>
         </div>
+        {error && <div className='text-red-600 m-6'>{error}</div>}
       </div>
     </div>
   );
