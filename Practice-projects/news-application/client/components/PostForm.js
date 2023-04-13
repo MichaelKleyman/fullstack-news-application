@@ -10,7 +10,7 @@ async function createArticle(postObj) {
   try {
     await Axios.post(URL, postObj);
   } catch (error) {
-    console.log({ error: error });
+    console.error({ error: error });
   }
 }
 
