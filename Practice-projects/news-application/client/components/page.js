@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { TbHandClick } from 'react-icons/tb';
 
 const Page = ({ articles }) => {
   const handlePost = () => {};
@@ -23,13 +24,18 @@ const Page = ({ articles }) => {
       </div>
       <div className='grid md:grid-cols-3'>
         {articles.data?.map((article) => (
-          <Link
+          <div
             key={article.id}
-            href={`/articles/${article.slug}`}
-            className='p-6 m-3 rounded-lg shadow-lg shadow-gray-400 cursor-pointer duration-300 hover:scale-110'
+            className='p-6 m-3 rounded-lg shadow-lg shadow-gray-400 cursor-pointer'
           >
-            {article.title}
-          </Link>
+            <Link
+              href={`/articles/${article.slug}`}
+              className='flex justify-end hover:text-blue-700'
+            >
+              <TbHandClick size={20} className='duration-300 hover:scale-110' />
+            </Link>
+            <div>{article.title}</div>
+          </div>
         ))}
       </div>
     </div>

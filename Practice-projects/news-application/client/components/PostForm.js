@@ -24,14 +24,18 @@ export default function PageForm({ postObj, setPost, error, setError }) {
   };
 
   const handleSubmit = async () => {
-    if (title.length && slug.length && content.length) {
-      router.push('/');
-      await createArticle(postObj);
-      setPost({ title: '', slug: '', content: '' });
-      setError(null);
-      console.log(postObj);
-    } else {
-      setError('Fill in all fields.');
+    try {
+      if (title.length && slug.length && content.length) {
+        router.push('/');
+        await createArticle(postObj);
+        setPost({ title: '', slug: '', content: '' });
+        setError(null);
+        console.log(postObj);
+      } else {
+        setError('Fill in all fields.');
+      }
+    } catch (error) {
+      console.log('Errororrrr: ', error);
     }
   };
 
