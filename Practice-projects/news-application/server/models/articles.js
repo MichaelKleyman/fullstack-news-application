@@ -19,9 +19,21 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
-      title: { type: DataTypes.STRING, allowNull: false },
-      slug: { type: DataTypes.STRING, allowNull: false },
-      content: { type: DataTypes.STRING, allowNull: false },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: { notEmpty: true }, //wont allow empty string.
+      },
+      slug: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: { notEmpty: true },
+      },
+      content: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: { notEmpty: true },
+      },
     },
     {
       sequelize,
